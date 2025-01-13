@@ -1,7 +1,7 @@
 /* Основной стиль */
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #eef2f3, #8e9eab);
+    background: linear-gradient(135deg, #f0f4f8, #c1d3d9);
     color: #333;
     margin: 0;
     display: flex;
@@ -31,7 +31,7 @@ body {
 
 header h1 {
     font-size: 28px;
-    color: #3f72af;
+    color: #2f5061;
     margin-bottom: 10px;
 }
 
@@ -42,7 +42,7 @@ header p {
 }
 
 .buttons button {
-    background-color: #3f72af;
+    background-color: #2f5061;
     color: #ffffff;
     border: none;
     border-radius: 10px;
@@ -64,13 +64,6 @@ header p {
 }
 
 /* Экран "Отметиться" */
-#check-in-screen img {
-    width: 200px;
-    height: 200px;
-    margin: 20px auto;
-    display: block;
-}
-
 #check-in-screen form {
     display: flex;
     flex-direction: column;
@@ -87,7 +80,7 @@ header p {
 }
 
 #check-in-screen button {
-    background-color: #3f72af;
+    background-color: #2f5061;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -115,12 +108,12 @@ header p {
 }
 
 #attendance-screen th {
-    background-color: #3f72af;
+    background-color: #2f5061;
     color: #fff;
 }
 
 #attendance-screen button {
-    background-color: #3f72af;
+    background-color: #2f5061;
     color: #fff;
     border: none;
     border-radius: 5px;
