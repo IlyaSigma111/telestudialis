@@ -1,59 +1,108 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Учет посещений - ТЕЛЕстудия ЛИС</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ТЕЛЕстудия ЛИС</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 500px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 15px 32px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .attendance-list {
+      list-style-type: none;
+      padding: 0;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Главная страница -->
-        <div id="main-screen">
-            <header>
-                <h1>Учет посещений</h1>
-                <p>ТЕЛЕстудия ЛИС</p>
-            </header>
-            <div class="buttons">
-                <button onclick="showCheckInScreen()">Отметиться</button>
-                <button onclick="showAttendanceScreen()">Посмотреть отметки</button>
-            </div>
-        </div>
+  <div class="container">
+    <h1>Учет посещений ТЕЛЕстудия ЛИС</h1>
+    <button id="markAttendanceBtn">Отметиться</button>
+    <button id="viewAttendanceBtn">Посмотреть отметки</button>
 
-        <!-- Экран отметки -->
-        <div id="check-in-screen">
-            <header>
-                <h1>Отметиться</h1>
-                <p>Введите ваше имя</p>
-            </header>
-            <form onsubmit="markAttendance(event)">
-                <input type="text" id="name" placeholder="Введите имя" required>
-                <button type="submit">Отметиться</button>
-            </form>
-            <button onclick="backToMain()">Вернуться на главную</button>
-        </div>
-
-        <!-- Экран посещений -->
-        <div id="attendance-screen">
-            <header>
-                <h1>Посещение</h1>
-                <p>Посмотреть отметки</p>
-            </header>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Имя</th>
-                        <th>Дата</th>
-                    </tr>
-                </thead>
-                <tbody id="attendance-table-body">
-                    <!-- Данные будут отображаться здесь -->
-                </tbody>
-            </table>
-            <button onclick="backToMain()">Вернуться на главную</button>
-        </div>
+    <div id="attendanceForm" style="display:none;">
+      <h2>Введите свое имя</h2>
+      <input type="text" id="name" placeholder="Имя" required />
+      <button onclick="markAttendance()">Отметиться</button>
     </div>
 
-    <script src="script.js"></script>
+    <div id="attendanceList" style="display:none;">
+      <h2>Список посещений:</h2>
+      <ul class="attendance-list" id="attendanceUl"></ul>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('markAttendanceBtn').onclick = function () {
+      document.getElementById('attendanceForm').style.display = 'block';
+      document.getElementById('attendanceList').style.display = 'none';
+    };
+
+    document.getElementById('viewAttendanceBtn').onclick = function () {
+      fetch('/get-attendance')
+        .then(response => response.json())
+        .then(data => {
+          let listHtml = '';
+          data.forEach(entry => {
+            listHtml += `<li>${entry.name} - ${entry.date}</li>`;
+          });
+          document.getElementById('attendanceUl').innerHTML = listHtml;
+          document.getElementById('attendanceForm').style.display = 'none';
+          document.getElementById('attendanceList').style.display = 'block';
+        })
+        .catch(err => console.log('Ошибка:', err));
+    };
+
+    function markAttendance() {
+      const name = document.getElementById('name').value;
+      if (name) {
+        fetch('/add-attendance', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name })
+        })
+          .then(response => response.text())
+          .then(data => {
+            alert(data);
+            document.getElementById('attendanceForm').style.display = 'none';
+          })
+          .catch(err => console.log('Ошибка:', err));
+      } else {
+        alert('Пожалуйста, введите имя!');
+      }
+    }
+  </script>
 </body>
 </html>
