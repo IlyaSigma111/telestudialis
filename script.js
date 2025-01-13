@@ -1,19 +1,44 @@
-// DOM элементы
+// Получение DOM-элементов
+const mainScreen = document.getElementById('main-screen');
+const checkInScreen = document.getElementById('check-in-screen');
+const attendanceScreen = document.getElementById('attendance-screen');
 const checkInButton = document.getElementById('check-in-button');
 const viewAttendanceButton = document.getElementById('view-attendance-button');
-const qrCodeDiv = document.getElementById('qr-code');
+const backToMainFromCheckIn = document.getElementById('back-to-main-from-checkin');
+const backToMainFromAttendance = document.getElementById('back-to-main-from-attendance');
 const nameForm = document.getElementById('name-form');
 const firstNameInput = document.getElementById('first-name');
 const lastNameInput = document.getElementById('last-name');
-const attendanceTable = document.getElementById('attendance-table');
 const attendanceRecords = document.getElementById('attendance-records');
 
-// Сохранённые данные
+// Локальное хранилище для данных посещений
 let attendanceData = JSON.parse(localStorage.getItem('attendance')) || [];
 
-// Отобразить записи в таблице
+// Переходы между экранами
+checkInButton.addEventListener('click', () => {
+    mainScreen.classList.add('hidden');
+    checkInScreen.classList.remove('hidden');
+});
+
+viewAttendanceButton.addEventListener('click', () => {
+    mainScreen.classList.add('hidden');
+    attendanceScreen.classList.remove('hidden');
+    renderAttendance();
+});
+
+backToMainFromCheckIn.addEventListener('click', () => {
+    checkInScreen.classList.add('hidden');
+    mainScreen.classList.remove('hidden');
+});
+
+backToMainFromAttendance.addEventListener('click', () => {
+    attendanceScreen.classList.add('hidden');
+    mainScreen.classList.remove('hidden');
+});
+
+// Обновление таблицы посещений
 function renderAttendance() {
-    attendanceRecords.innerHTML = "";
+    attendanceRecords.innerHTML = '';
     attendanceData.forEach((record, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -26,13 +51,7 @@ function renderAttendance() {
     });
 }
 
-// Показать/скрыть QR-код
-checkInButton.addEventListener('click', () => {
-    qrCodeDiv.classList.toggle('hidden');
-    nameForm.classList.add('hidden');
-});
-
-// Отправка формы
+// Сохранение отметок
 nameForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const now = new Date().toLocaleString();
@@ -42,22 +61,9 @@ nameForm.addEventListener('submit', (event) => {
     if (firstName && lastName) {
         attendanceData.push({ firstName, lastName, dateTime: now });
         localStorage.setItem('attendance', JSON.stringify(attendanceData));
-        renderAttendance();
-        firstNameInput.value = '';
-        lastNameInput.value = '';
-        qrCodeDiv.classList.add('hidden');
-        alert('Вы успешно отметились!');
+        alert('Отметка сохранена!');
+        nameForm.reset();
     } else {
-        alert('Пожалуйста, введите имя и фамилию.');
+        alert('Введите имя и фамилию!');
     }
 });
-
-// Показать таблицу посещений
-viewAttendanceButton.addEventListener('click', () => {
-    qrCodeDiv.classList.add('hidden');
-    attendanceTable.classList.toggle('hidden');
-    renderAttendance();
-});
-
-// Инициализация
-renderAttendance();
