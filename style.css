@@ -1,90 +1,134 @@
-/* Общий стиль */
+/* Основной стиль */
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #f9f7f7, #dbe2ef);
+    background: linear-gradient(135deg, #eef2f3, #8e9eab);
     color: #333;
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
 }
 
+/* Контейнер */
 .container {
-    text-align: center;
-    background-color: #ffffff;
-    border-radius: 15px;
-    padding: 20px 30px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     width: 90%;
     max-width: 500px;
+    text-align: center;
+}
+
+/* Главный экран */
+#main-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 header h1 {
     font-size: 28px;
     color: #3f72af;
-    margin: 10px 0;
+    margin-bottom: 10px;
 }
 
 header p {
     font-size: 16px;
     color: #555;
+    margin-bottom: 20px;
 }
 
 .buttons button {
-    background-color: #dbe2ef;
-    color: #3f72af;
+    background-color: #3f72af;
+    color: #ffffff;
     border: none;
     border-radius: 10px;
     padding: 15px 25px;
     margin: 10px;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
     transition: background 0.3s;
+    width: 100%;
 }
 
 .buttons button:hover {
-    background-color: #3f72af;
-    color: #fff;
+    background-color: #112d4e;
 }
 
-#qr-code {
-    margin-top: 20px;
+/* Скрытые экраны */
+.hidden {
+    display: none;
 }
 
-form {
-    margin-top: 20px;
+/* Экран "Отметиться" */
+#check-in-screen img {
+    width: 200px;
+    height: 200px;
+    margin: 20px auto;
+    display: block;
 }
 
-form input {
-    margin: 5px;
+#check-in-screen form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#check-in-screen input {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 5px;
+    width: 80%;
 }
 
-form button {
+#check-in-screen button {
     background-color: #3f72af;
     color: #fff;
     border: none;
     border-radius: 5px;
-    padding: 10px 15px;
+    padding: 10px 20px;
     cursor: pointer;
+    font-size: 16px;
 }
 
-#attendance-table table {
+#check-in-screen button:hover {
+    background-color: #112d4e;
+}
+
+/* Таблица посещений */
+#attendance-screen table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin: 20px 0;
 }
 
-#attendance-table th,
-#attendance-table td {
-    border: 1px solid #ccc;
+#attendance-screen th,
+#attendance-screen td {
+    border: 1px solid #ddd;
     padding: 10px;
     text-align: center;
 }
 
-.hidden {
-    display: none;
+#attendance-screen th {
+    background-color: #3f72af;
+    color: #fff;
+}
+
+#attendance-screen button {
+    background-color: #3f72af;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#attendance-screen button:hover {
+    background-color: #112d4e;
 }
