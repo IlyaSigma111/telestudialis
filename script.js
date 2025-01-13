@@ -1,75 +1,70 @@
-// Получение DOM-элементов
-const mainScreen = document.getElementById('main-screen');
-const checkInScreen = document.getElementById('check-in-screen');
-const attendanceScreen = document.getElementById('attendance-screen');
-const checkInButton = document.getElementById('check-in-button');
-const viewAttendanceButton = document.getElementById('view-attendance-button');
-const backToMainFromCheckIn = document.getElementById('back-to-main-from-checkin');
-const backToMainFromAttendance = document.getElementById('back-to-main-from-attendance');
-const nameForm = document.getElementById('name-form');
-const firstNameInput = document.getElementById('first-name');
-const lastNameInput = document.getElementById('last-name');
-const attendanceRecords = document.getElementById('attendance-records');
+// Получение данных посещений из LocalStorage
+function getAttendanceData() {
+    const data = localStorage.getItem('attendanceData');
+    return data ? JSON.parse(data) : [];
+}
 
-// Локальное хранилище для данных посещений
-let attendanceData = JSON.parse(localStorage.getItem('attendance')) || [];
+// Сохранение новых данных в LocalStorage
+function saveAttendanceData(data) {
+    localStorage.setItem('attendanceData', JSON.stringify(data));
+}
 
-// Локальный пользователь
-let currentUser = null;
+// Функция для добавления отметки
+function markAttendance(event) {
+    event.preventDefault(); // Отменяет стандартное поведение формы (перезагрузку)
 
-// Переходы между экранами
-checkInButton.addEventListener('click', () => {
-    mainScreen.classList.add('hidden');
-    checkInScreen.classList.remove('hidden');
-});
+    const name = document.getElementById('name').value;
+    if (name.trim() !== '') {
+        const attendanceData = getAttendanceData();
+        const newMark = { name: name, date: new Date().toLocaleString() };
+        attendanceData.push(newMark);
+        saveAttendanceData(attendanceData);
+        displayAttendance();
+        backToMain();
+    }
+}
 
-viewAttendanceButton.addEventListener('click', () => {
-    mainScreen.classList.add('hidden');
-    attendanceScreen.classList.remove('hidden');
-    renderAttendance();
-});
+// Функция для отображения всех отметок
+function displayAttendance() {
+    const attendanceData = getAttendanceData();
+    const tableBody = document.getElementById('attendance-table-body');
+    tableBody.innerHTML = ''; // очищаем таблицу
 
-backToMainFromCheckIn.addEventListener('click', () => {
-    checkInScreen.classList.add('hidden');
-    mainScreen.classList.remove('hidden');
-});
-
-backToMainFromAttendance.addEventListener('click', () => {
-    attendanceScreen.classList.add('hidden');
-    mainScreen.classList.remove('hidden');
-});
-
-// Обновление таблицы посещений
-function renderAttendance() {
-    attendanceRecords.innerHTML = '';
-    attendanceData.forEach((record, index) => {
+    attendanceData.forEach(entry => {
         const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${record.firstName}</td>
-            <td>${record.lastName}</td>
-            <td>${record.dateTime}</td>
-        `;
-        attendanceRecords.appendChild(row);
+        const nameCell = document.createElement('td');
+        nameCell.textContent = entry.name;
+        const dateCell = document.createElement('td');
+        dateCell.textContent = entry.date;
+
+        row.appendChild(nameCell);
+        row.appendChild(dateCell);
+        tableBody.appendChild(row);
     });
 }
 
-// Сохранение отметок
-nameForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const now = new Date().toLocaleString();
-    const firstName = firstNameInput.value.trim();
-    const lastName = lastNameInput.value.trim();
+// Переход на экран отметки
+function showCheckInScreen() {
+    document.getElementById('main-screen').style.display = 'none';
+    document.getElementById('attendance-screen').style.display = 'none';
+    document.getElementById('check-in-screen').style.display = 'block';
+}
 
-    if (firstName && lastName) {
-        currentUser = { firstName, lastName };
-        attendanceData.push({ firstName, lastName, dateTime: now });
-        localStorage.setItem('attendance', JSON.stringify(attendanceData));
-        alert('Отметка сохранена!');
-        nameForm.reset();
-        checkInScreen.classList.add('hidden');
-        mainScreen.classList.remove('hidden');
-    } else {
-        alert('Введите имя и фамилию!');
-    }
-});
+// Переход на экран посещений
+function showAttendanceScreen() {
+    document.getElementById('main-screen').style.display = 'none';
+    document.getElementById('check-in-screen').style.display = 'none';
+    document.getElementById('attendance-screen').style.display = 'block';
+    displayAttendance();
+}
+
+// Переход на главную страницу
+function backToMain() {
+    document.getElementById('main-screen').style.display = 'block';
+    document.getElementById('attendance-screen').style.display = 'none';
+    document.getElementById('check-in-screen').style.display = 'none';
+}
+
+// Вызов функции при загрузке страницы для отображения всех отметок
+window.onload = displayAttendance;
+
