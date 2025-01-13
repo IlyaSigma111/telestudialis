@@ -1,110 +1,54 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Социальная сеть</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТЕЛЕстудия ЛИС - Учёт посещений</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-  <header>
-    <div class="logo">Социальная Сеть</div>
-    <nav>
-      <a href="#">Главная</a>
-      <a href="#">Друзья</a>
-      <a href="#">Группы</a>
-      <a href="#">Сообщения</a>
-      <a href="#">Профиль</a>
-      <button id="loginButton">Войти</button>
-    </nav>
-  </header>
-
-  <main class="main-content">
     <div class="container">
-      <aside class="sidebar">
-        <h3>Навигация</h3>
-        <ul>
-          <li><a href="#">Лента новостей</a></li>
-          <li><a href="#">Друзья</a></li>
-          <li><a href="#">Сообщения</a></li>
-          <li><a href="#">Группы</a></li>
-        </ul>
-      </aside>
-
-      <section class="feed">
-        <div class="profile-section">
-          <h2>Мой профиль</h2>
-          <div class="profile-card" id="profileCard">
-            <img src="https://via.placeholder.com/150" alt="Аватар" class="avatar">
-            <div class="profile-info">
-              <h3 id="userName">Имя Фамилия</h3>
-              <p id="userBio">Краткая информация о пользователе</p>
-              <button id="editProfileButton">Редактировать профиль</button>
+        <header>
+            <h1>ТЕЛЕстудия ЛИС</h1>
+            <p>Система учёта посещений</p>
+        </header>
+        <main>
+            <div class="buttons">
+                <button id="check-in-button">Отметиться</button>
+                <button id="view-attendance-button">Посмотреть посещения</button>
             </div>
-          </div>
-        </div>
 
-        <div class="posts">
-          <h3>Новости</h3>
-          <div class="post">
-            <p><strong>Иван Иванов:</strong> Привет, друзья!</p>
-            <iframe width="110" height="200" src="https://www.myinstants.com/instant/sigma-boy-32341/embed/" frameborder="0" scrolling="no"></iframe>
-            <button>Понравилось</button>
-            <button>Комментировать</button>
-          </div>
-          <div class="post">
-            <p><strong>Мария Петрова:</strong> Как ваши дела?</p>
-            <button>Понравилось</button>
-            <button>Комментировать</button>
-          </div>
-        </div>
-      </section>
-      
-      <aside class="right-sidebar">
-        <div class="create-group">
-          <h3>Создать группу</h3>
-          <form>
-            <input type="text" placeholder="Название группы">
-            <button type="submit">Создать</button>
-          </form>
-        </div>
-      </aside>
+            <!-- QR-код -->
+            <div id="qr-code" class="hidden">
+                <p>Сканируйте QR-код:</p>
+                <img src="https://via.placeholder.com/200?text=QR+Code" alt="QR Code">
+                <form id="name-form" class="hidden">
+                    <input type="text" id="first-name" placeholder="Имя" required>
+                    <input type="text" id="last-name" placeholder="Фамилия" required>
+                    <button type="submit">Отметиться</button>
+                </form>
+            </div>
+
+            <!-- Таблица посещений -->
+            <div id="attendance-table" class="hidden">
+                <h2>Список посещений</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Имя</th>
+                            <th>Фамилия</th>
+                            <th>Дата и время</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendance-records">
+                        <!-- Строки таблицы будут добавляться динамически -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
     </div>
 
-    <!-- Форма для регистрации -->
-    <div id="registerModal" class="modal">
-      <div class="modal-content">
-        <h2>Регистрация</h2>
-        <form id="registerForm">
-          <input type="text" id="registerName" placeholder="Имя" required>
-          <input type="text" id="registerSurname" placeholder="Фамилия" required>
-          <input type="email" id="registerEmail" placeholder="Email" required>
-          <input type="password" id="registerPassword" placeholder="Пароль" required>
-          <button type="submit">Зарегистрироваться</button>
-        </form>
-        <button class="close-btn" onclick="closeModal('registerModal')">Закрыть</button>
-      </div>
-    </div>
-
-    <!-- Форма для редактирования профиля -->
-    <div id="editProfileModal" class="modal">
-      <div class="modal-content">
-        <h2>Редактировать профиль</h2>
-        <form id="editProfileForm">
-          <input type="text" id="editUserName" placeholder="Имя" required>
-          <input type="text" id="editUserBio" placeholder="О себе" required>
-          <button type="submit">Сохранить</button>
-        </form>
-        <button class="close-btn" onclick="closeModal('editProfileModal')">Закрыть</button>
-      </div>
-    </div>
-  </main>
-
-  <footer>
-    <p>© 2024 Социальная сеть</p>
-  </footer>
-
+    <script src="script.js"></script>
 </body>
 </html>
