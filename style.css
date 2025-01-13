@@ -1,4 +1,4 @@
-/* Основной стиль */
+9/* Основной стиль */
 body {
     font-family: Arial, sans-serif;
     background: #f4f4f9;
@@ -17,7 +17,7 @@ body {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    width: 80%;
+    width: 90%;
     max-width: 400px;
     text-align: center;
 }
@@ -125,4 +125,39 @@ header p {
 
 #attendance-screen button:hover {
     background-color: #3a5c6d;
+}
+
+/* Медиазапросы для мобильных устройств */
+@media (max-width: 600px) {
+    /* Для мобильных устройств увеличиваем отступы и делаем шрифт немного меньше */
+    .container {
+        padding: 15px;
+        width: 95%;
+        max-width: 100%;
+    }
+
+    header h1 {
+        font-size: 22px;
+    }
+
+    header p {
+        font-size: 12px;
+    }
+
+    .buttons button {
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+
+    #check-in-screen input {
+        width: 100%;
+    }
+
+    #check-in-screen button {
+        width: 100%;
+    }
+
+    #attendance-screen table {
+        font-size: 14px;
+    }
 }
