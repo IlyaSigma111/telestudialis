@@ -14,6 +14,9 @@ const attendanceRecords = document.getElementById('attendance-records');
 // Локальное хранилище для данных посещений
 let attendanceData = JSON.parse(localStorage.getItem('attendance')) || [];
 
+// Локальный пользователь
+let currentUser = null;
+
 // Переходы между экранами
 checkInButton.addEventListener('click', () => {
     mainScreen.classList.add('hidden');
@@ -59,10 +62,13 @@ nameForm.addEventListener('submit', (event) => {
     const lastName = lastNameInput.value.trim();
 
     if (firstName && lastName) {
+        currentUser = { firstName, lastName };
         attendanceData.push({ firstName, lastName, dateTime: now });
         localStorage.setItem('attendance', JSON.stringify(attendanceData));
         alert('Отметка сохранена!');
         nameForm.reset();
+        checkInScreen.classList.add('hidden');
+        mainScreen.classList.remove('hidden');
     } else {
         alert('Введите имя и фамилию!');
     }
