@@ -8,45 +8,48 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>ТЕЛЕстудия ЛИС</h1>
-            <p>Система учёта посещений</p>
-        </header>
-        <main>
+        <!-- Главный экран -->
+        <div id="main-screen">
+            <header>
+                <h1>📺 ТЕЛЕстудия ЛИС</h1>
+                <p>Добро пожаловать в систему учёта посещений!</p>
+            </header>
             <div class="buttons">
-                <button id="check-in-button">Отметиться</button>
-                <button id="view-attendance-button">Посмотреть посещения</button>
+                <button id="check-in-button">✅ Отметиться</button>
+                <button id="view-attendance-button">📋 Посмотреть отметки</button>
             </div>
+        </div>
 
-            <!-- QR-код -->
-            <div id="qr-code" class="hidden">
-                <p>Сканируйте QR-код:</p>
-                <img src="https://via.placeholder.com/200?text=QR+Code" alt="QR Code">
-                <form id="name-form" class="hidden">
-                    <input type="text" id="first-name" placeholder="Имя" required>
-                    <input type="text" id="last-name" placeholder="Фамилия" required>
-                    <button type="submit">Отметиться</button>
-                </form>
-            </div>
+        <!-- Экран "Отметиться" -->
+        <div id="check-in-screen" class="hidden">
+            <h2>Сканируйте QR-код</h2>
+            <img id="qr-image" src="https://via.placeholder.com/300?text=QR+Code" alt="QR Code">
+            <form id="name-form">
+                <input type="text" id="first-name" placeholder="Имя" required>
+                <input type="text" id="last-name" placeholder="Фамилия" required>
+                <button type="submit">💾 Сохранить</button>
+            </form>
+            <button id="back-to-main-from-checkin">🔙 Назад</button>
+        </div>
 
-            <!-- Таблица посещений -->
-            <div id="attendance-table" class="hidden">
-                <h2>Список посещений</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Имя</th>
-                            <th>Фамилия</th>
-                            <th>Дата и время</th>
-                        </tr>
-                    </thead>
-                    <tbody id="attendance-records">
-                        <!-- Строки таблицы будут добавляться динамически -->
-                    </tbody>
-                </table>
-            </div>
-        </main>
+        <!-- Экран "Посмотреть отметки" -->
+        <div id="attendance-screen" class="hidden">
+            <h2>Посещения</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Дата и время</th>
+                    </tr>
+                </thead>
+                <tbody id="attendance-records">
+                    <!-- Данные появятся автоматически -->
+                </tbody>
+            </table>
+            <button id="back-to-main-from-attendance">🔙 Назад</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
